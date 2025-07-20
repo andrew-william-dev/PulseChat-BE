@@ -74,45 +74,13 @@ This is the **backend** for a real-time chat application with support for user r
 📬 API Endpoints
 ----------------
 
-Method
+| Method | Endpoint    | Description             | Auth Required |
+| ------ | ----------- | ----------------------- | ------------- |
+| POST   | `/register` | Register new user       | ❌             |
+| POST   | `/login`    | Login and get JWT token | ❌             |
+| GET    | `/profile`  | Get current user info   | ✅             |
+| GET    | `/ws`       | WebSocket connection    | ✅ (via token) |
 
-Endpoint
-
-Description
-
-Auth Required
-
-POST
-
-`/register`
-
-Register new user
-
-❌
-
-POST
-
-`/login`
-
-Login and get JWT token
-
-❌
-
-GET
-
-`/profile`
-
-Get current user info
-
-✅
-
-GET
-
-`/ws`
-
-WebSocket connection
-
-✅ (via token)
 
 **Note:** All protected routes require the `Authorization: Bearer <token>` header.
 
