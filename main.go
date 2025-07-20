@@ -3,16 +3,21 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 	"chatapp/handlers"
 	"chatapp/middleware"
 	"chatapp/utils"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	_ = godotenv.Load()
+
 	utils.InitDB()
+
 	r := mux.NewRouter()
 
 	r.HandleFunc("/api/register", handlers.RegisterHandler).Methods("POST")
@@ -23,14 +28,18 @@ func main() {
 	r.HandleFunc("/api/messages/{userId}", middleware.AuthMiddleware(handlers.GetMessages)).Methods("GET")
 	r.HandleFunc("/ws", middleware.SocketMiddleware(handlers.WebSocketHandler))
 
-
 	handler := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:3000"},
 		AllowCredentials: true,
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Authorization", "Content-Type"},
-	}).Handler(r) 
+	}).Handler(r)
 
-	log.Println("Server started on :8080")
-	log.Fatal(http.ListenAndServe(":8080", handler))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Printf("🚀 Server running on :%s\n", port)
+	log.Fatal(http.ListenAndServe(":"+port, handler))
 }
