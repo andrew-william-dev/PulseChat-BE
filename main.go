@@ -29,7 +29,7 @@ func main() {
 	r.HandleFunc("/ws", middleware.SocketMiddleware(handlers.WebSocketHandler))
 
 	handler := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000"},
+		AllowedOrigins:   []string{"*"},
 		AllowCredentials: true,
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Authorization", "Content-Type"},
