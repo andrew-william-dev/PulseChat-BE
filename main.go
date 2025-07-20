@@ -29,7 +29,7 @@ func main() {
 	r.HandleFunc("/ws", middleware.SocketMiddleware(handlers.WebSocketHandler))
 
 	handler := cors.New(cors.Options{
-		AllowedOrigins: []string{"https://pulse-chat-ten.vercel.app"},
+		AllowedOrigins: []string{"https://pulse-chat-ten.vercel.app", "http://localhost:3000"},
 		AllowCredentials: true,
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Authorization", "Content-Type"},
